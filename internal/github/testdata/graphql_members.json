@@ -1,0 +1,37 @@
+{
+  "data": {
+    "organization": {
+      "membersWithRole": {
+        "totalCount": 3,
+        "pageInfo": {
+          "hasNextPage": false,
+          "endCursor": ""
+        },
+        "nodes": [
+          {
+            "login": "user-g",
+            "name": "User G",
+            "email": "",
+            "organizationVerifiedDomainEmails": [
+              "user-g@example.com"
+            ]
+          },
+          {
+            "login": "user-h",
+            "name": "User H",
+            "email": "user-h@example.com",
+            "organizationVerifiedDomainEmails": [
+              "user-h@example.com"
+            ]
+          },
+          {
+            "login": "user-i",
+            "name": "User I",
+            "email": "user-i@example.com",
+            "organizationVerifiedDomainEmails": []
+          }
+        ]
+      }
+    }
+  }
+}

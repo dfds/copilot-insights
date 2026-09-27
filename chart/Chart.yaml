@@ -1,0 +1,6 @@
+apiVersion: v2
+name: copilot-insights
+description: A Helm chart for copilot-insights — GitHub Copilot usage, seat and billing collector with a REST API
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

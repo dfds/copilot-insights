@@ -1,0 +1,108 @@
+{
+  "usageItems": [
+    {
+      "date": "2031-08-11T07:13:29.379000Z",
+      "product": "copilot",
+      "sku": "Coding Agent Premium Request",
+      "quantity": 1166.4272,
+      "unitType": "Requests",
+      "pricePerUnit": 0.0902,
+      "grossAmount": 105.2117,
+      "discountAmount": 105.2117,
+      "netAmount": 0.0,
+      "organizationName": "org-2",
+      "repositoryName": ""
+    },
+    {
+      "date": "2031-08-11T07:13:29.379000Z",
+      "product": "copilot",
+      "sku": "Copilot Business",
+      "quantity": 1334.4037,
+      "unitType": "UserMonths",
+      "pricePerUnit": 0.0546,
+      "grossAmount": 72.8584,
+      "discountAmount": 0.0,
+      "netAmount": 72.8584,
+      "organizationName": "org-2",
+      "repositoryName": ""
+    },
+    {
+      "date": "2031-08-11T07:13:29.379000Z",
+      "product": "copilot",
+      "sku": "Copilot Premium Request",
+      "quantity": 1228.1555,
+      "unitType": "Requests",
+      "pricePerUnit": 0.0938,
+      "grossAmount": 115.201,
+      "discountAmount": 31.2141,
+      "netAmount": 83.9869,
+      "organizationName": "org-2",
+      "repositoryName": ""
+    },
+    {
+      "date": "2031-09-11T07:13:29.379000Z",
+      "product": "copilot",
+      "sku": "Coding Agent Premium Request",
+      "quantity": 1619.4565,
+      "unitType": "Requests",
+      "pricePerUnit": 0.0709,
+      "grossAmount": 114.8195,
+      "discountAmount": 114.8195,
+      "netAmount": 0.0,
+      "organizationName": "org-2",
+      "repositoryName": ""
+    },
+    {
+      "date": "2031-09-11T07:13:29.379000Z",
+      "product": "copilot",
+      "sku": "Copilot Business",
+      "quantity": 111.6803,
+      "unitType": "UserMonths",
+      "pricePerUnit": 0.1419,
+      "grossAmount": 15.8474,
+      "discountAmount": 0.0,
+      "netAmount": 15.8474,
+      "organizationName": "org-2",
+      "repositoryName": ""
+    },
+    {
+      "date": "2031-09-11T07:13:29.379000Z",
+      "product": "copilot",
+      "sku": "Copilot Premium Request",
+      "quantity": 238.5493,
+      "unitType": "Requests",
+      "pricePerUnit": 0.0695,
+      "grossAmount": 16.5792,
+      "discountAmount": 8.2937,
+      "netAmount": 8.2855,
+      "organizationName": "org-2",
+      "repositoryName": ""
+    },
+    {
+      "date": "2031-08-11T07:13:29.379000Z",
+      "product": "actions",
+      "sku": "Actions Linux",
+      "quantity": 1484.4568,
+      "unitType": "Minutes",
+      "pricePerUnit": 0.0337,
+      "grossAmount": 50.0262,
+      "discountAmount": 12.8464,
+      "netAmount": 37.1798,
+      "organizationName": "org-1",
+      "repositoryName": "repo-1"
+    },
+    {
+      "date": "2031-08-11T07:13:29.379000Z",
+      "product": "actions",
+      "sku": "Actions Windows",
+      "quantity": 1089.2215,
+      "unitType": "Minutes",
+      "pricePerUnit": 0.0859,
+      "grossAmount": 93.5641,
+      "discountAmount": 26.071,
+      "netAmount": 67.4931,
+      "organizationName": "org-2",
+      "repositoryName": "repo-2"
+    }
+  ]
+}

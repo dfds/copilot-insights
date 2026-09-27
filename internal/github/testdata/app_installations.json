@@ -1,0 +1,48 @@
+[
+  {
+    "id": 693811,
+    "account": {
+      "login": "",
+      "slug": "team-1",
+      "type": ""
+    },
+    "target_type": "Enterprise",
+    "permissions": {
+      "enterprise_ai_controls": "read",
+      "enterprise_billing": "read",
+      "enterprise_copilot_metrics": "read",
+      "enterprise_copilot_usage": "read",
+      "enterprise_people": "read"
+    }
+  },
+  {
+    "id": 480569,
+    "account": {
+      "login": "org-2",
+      "slug": "",
+      "type": "Organization"
+    },
+    "target_type": "Organization",
+    "permissions": {
+      "members": "read",
+      "organization_administration": "read",
+      "organization_copilot_metrics": "read",
+      "organization_copilot_seat_management": "read"
+    }
+  },
+  {
+    "id": 594371,
+    "account": {
+      "login": "org-1",
+      "slug": "",
+      "type": "Organization"
+    },
+    "target_type": "Organization",
+    "permissions": {
+      "members": "read",
+      "organization_administration": "read",
+      "organization_copilot_metrics": "read",
+      "organization_copilot_seat_management": "read"
+    }
+  }
+]

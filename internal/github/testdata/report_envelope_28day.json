@@ -1,0 +1,7 @@
+{
+  "download_links": [
+    "https://example.blob.core.windows.net/reports/download_links-0?sig=REDACTED"
+  ],
+  "report_end_day": "2032-05-01",
+  "report_start_day": "2032-04-04"
+}

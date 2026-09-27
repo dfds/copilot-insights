@@ -1,0 +1,49 @@
+{
+  "timePeriod": {
+    "year": 2032,
+    "month": 7
+  },
+  "enterprise": "Example Enterprise",
+  "user": "user-d",
+  "usageItems": [
+    {
+      "product": "Copilot",
+      "sku": "Copilot Premium Request",
+      "model": "model-fixture-zbtfvidyrv",
+      "unitType": "requests",
+      "pricePerUnit": 0.1167,
+      "grossQuantity": 1416.2087,
+      "grossAmount": 165.2716,
+      "discountQuantity": 1416.2087,
+      "discountAmount": 165.2716,
+      "netQuantity": 0.0,
+      "netAmount": 0.0
+    },
+    {
+      "product": "Copilot",
+      "sku": "Copilot Premium Request",
+      "model": "model-fixture-pbhcfkphuo",
+      "unitType": "requests",
+      "pricePerUnit": 0.119,
+      "grossQuantity": 1691.0831,
+      "grossAmount": 201.2389,
+      "discountQuantity": 1691.0831,
+      "discountAmount": 201.2389,
+      "netQuantity": 0.0,
+      "netAmount": 0.0
+    },
+    {
+      "product": "Copilot",
+      "sku": "Coding Agent Premium Request",
+      "model": "Coding Agent model",
+      "unitType": "requests",
+      "pricePerUnit": 0.0656,
+      "grossQuantity": 596.6408,
+      "grossAmount": 39.1396,
+      "discountQuantity": 596.6408,
+      "discountAmount": 39.1396,
+      "netQuantity": 0.0,
+      "netAmount": 0.0
+    }
+  ]
+}

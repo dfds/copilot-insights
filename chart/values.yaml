@@ -1,0 +1,53 @@
+image:
+  repository: dfdsdk/copilot-insights
+  pullPolicy: Always
+  tag: "latest"
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+service:
+  type: ClusterIP
+  port: 8080
+  metricsPort: 9090
+
+ingress:
+  enabled: true
+  host: ""
+  entryPoints: []
+
+serviceMonitor:
+  enabled: true
+
+vmServiceScrape:
+  enabled: true
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+# Plain (non-secret) configuration; see README.md for every variable and its
+# default. Secrets come from envFromSecret: CPI_GITHUB_APPPRIVATEKEY,
+# CPI_GITHUB_PAT, CPI_DB_USER and CPI_DB_PASSWORD.
+env:
+  CPI_GITHUB_ENTERPRISE: "dfds"
+  CPI_GITHUB_APPID: ""
+  CPI_DB_HOST: ""
+  CPI_DB_NAME: "copilot_insights"
+  CPI_DB_SSLMODE: "require"
+  CPI_OIDC_ENABLED: "true"
+  CPI_OIDC_ISSUERURL: ""
+  CPI_OIDC_AUDIENCE: ""
+  CPI_OIDC_REQUIREDROLES: "copilot.read"
+  CPI_OIDC_ADMINROLES: "copilot.admin"
+
+envFromSecret: ""   # name of a Secret carrying the CPI_* secrets above
