@@ -96,8 +96,12 @@ func (f *fakeStore) CreditUsage(_ context.Context, cf store.CreditFilter) (*stor
 }
 
 func (f *fakeStore) CreditHourly(_ context.Context, cf store.CreditFilter) (*store.CreditUsage, int, error) {
-	f.call("CreditHourly", cf.Enterprise, cf.Org, cf.Login, cf.Model, cf.From, cf.To, cf.GroupBy, cf.Top, cf.RankBy,
-		cf.Page.Limit, cf.Page.Offset)
+	since := ""
+	if !cf.Since.IsZero() {
+		since = cf.Since.Format(time.RFC3339)
+	}
+	f.call("CreditHourly", cf.Enterprise, cf.Org, cf.Login, cf.Model, cf.From, cf.To, since, cf.GroupBy, cf.Top,
+		cf.RankBy, cf.Page.Limit, cf.Page.Offset)
 	return &store.CreditUsage{Totals: json.RawMessage(`{"quantity":0}`), Groups: []json.RawMessage{}}, 0, f.err
 }
 func (f *fakeStore) LegacyPRU(_ context.Context, ent, org, login string, m store.MonthFilter) ([]json.RawMessage, error) {

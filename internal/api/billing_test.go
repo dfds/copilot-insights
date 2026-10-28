@@ -151,6 +151,7 @@ func TestCreditsTop(t *testing.T) {
 		"groupBy=login&top=51":                                                   "invalid_top",
 		"groupBy=login&top=x":                                                    "invalid_top",
 		"groupBy=login&rankBy=net":                                               "invalid_rank",
+		"since=2026-09-01T09:00:00Z":                                             "invalid_since",
 	} {
 		if code, env := do(t, r, http.MethodGet, "/api/v1/credits/usage?scope=enterprise:dfds&"+q); code != http.StatusBadRequest || env.Error != wantErr {
 			t.Errorf("%s: %d %q, want %s", q, code, env.Error, wantErr)
@@ -170,9 +171,11 @@ func TestCreditsHourlyRoute(t *testing.T) {
 	st.calls = nil
 	do(t, r, http.MethodGet, "/api/v1/credits/hourly?scope=org:dfds&from=2026-09-01&to=2026-09-02&groupBy=login&top=10&limit=5000")
 	do(t, r, http.MethodGet, "/api/v1/credits/hourly?scope=enterprise:dfds&year=2026&month=9&groupBy=none&model=gpt")
+	do(t, r, http.MethodGet, "/api/v1/credits/hourly?scope=enterprise:dfds&from=2026-09-01&to=2026-09-02&since=2026-09-01T09:00:00.000Z")
 	want := []string{
-		"CreditHourly dfds dfds   2026-09-01 2026-09-02 login 10  5000 0",
-		"CreditHourly dfds   gpt 2026-09-01 2026-09-30  0  500 0",
+		"CreditHourly dfds dfds   2026-09-01 2026-09-02  login 10  5000 0",
+		"CreditHourly dfds   gpt 2026-09-01 2026-09-30   0  500 0",
+		"CreditHourly dfds    2026-09-01 2026-09-02 2026-09-01T09:00:00Z  0  500 0",
 	}
 	if !slices.Equal(st.calls, want) {
 		t.Errorf("calls = %q", st.calls)
@@ -181,6 +184,8 @@ func TestCreditsHourlyRoute(t *testing.T) {
 		"groupBy=day":         "invalid_group",
 		"groupBy=login,model": "invalid_group",
 		"top=10":              "invalid_top",
+		"since=2026-09-01":    "invalid_since",
+		"since=yesterday":     "invalid_since",
 	} {
 		if code, env := do(t, r, http.MethodGet, "/api/v1/credits/hourly?scope=enterprise:dfds&"+q); code != http.StatusBadRequest || env.Error != wantErr {
 			t.Errorf("%s: %d %q, want %s", q, code, env.Error, wantErr)

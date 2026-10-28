@@ -255,6 +255,16 @@ func TestAICreditIncrements(t *testing.T) {
 	if g := objects(t, top.Groups); err != nil || len(g) != 1 || g[0]["login"] != "dave" {
 		t.Errorf("top 1 = %v, err %v", g, err)
 	}
+	later, _, err := s.CreditHourly(ctx, store.CreditFilter{Enterprise: "dfds", From: today, To: today,
+		GroupBy: []string{"login"}, Top: 1, Since: time.Now().Add(time.Hour), Page: store.Page{Limit: 100}})
+	if err != nil || len(later.Groups) != 0 || !strings.Contains(string(later.Totals), `"quantity": 0`) {
+		t.Errorf("since after the run: %s %v, err %v", later.Totals, later.Groups, err)
+	}
+	earlier, _, err := s.CreditHourly(ctx, store.CreditFilter{Enterprise: "dfds", From: today, To: today,
+		Since: time.Now().Add(-time.Hour)})
+	if err != nil || !strings.Contains(string(earlier.Totals), `"quantity": 50`) {
+		t.Errorf("since before the run: %s, err %v", earlier.Totals, err)
+	}
 	none, _, err := s.CreditHourly(ctx, store.CreditFilter{Enterprise: "dfds", From: day20, To: day20})
 	if err != nil || len(none.Groups) != 0 || !strings.Contains(string(none.Totals), `"quantity": 0`) {
 		t.Errorf("other day: %s %v", none.Totals, err)

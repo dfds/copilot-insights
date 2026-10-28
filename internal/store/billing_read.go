@@ -130,7 +130,10 @@ type CreditFilter struct {
 	// Include adds these logins or models, matched case-insensitively, to the
 	// Top ones. It needs Top.
 	Include []string
-	Page    Page
+	// Since, when set, also drops increments captured before it. Only
+	// CreditHourly reads it, so the totals and the Top ranking follow it too.
+	Since time.Time
+	Page  Page
 }
 
 func CreditRankNames() []string { return []string{"quantity", "gross_amount"} }
@@ -249,17 +252,23 @@ const incrementSums = `jsonb_build_object(
 func CreditHourlyGroupNames() []string { return []string{"login", "model"} }
 
 // CreditHourly sums ai_credit_increments per UTC hour of captured_at and the
-// GroupBy values. From and To are UTC days, inclusive. Groups are ordered by
-// hour, then quantity descending; the int is the number of groups.
+// GroupBy values. From and To are UTC days, inclusive, further narrowed by
+// Since. Groups are ordered by hour, then quantity descending; the int is the
+// number of groups.
 func (s *Store) CreditHourly(ctx context.Context, f CreditFilter) (*CreditUsage, int, error) {
 	from, to := dates(f.From, f.To)
-	args := []any{f.Enterprise, from, to, f.Org, f.Login, f.Model}
+	var since any
+	if !f.Since.IsZero() {
+		since = f.Since.UTC()
+	}
+	args := []any{f.Enterprise, from, to, f.Org, f.Login, f.Model, since}
 	where := `enterprise = $1
 	  AND captured_at >= $2::timestamp AT TIME ZONE 'UTC'
 	  AND captured_at < ($3::date + 1)::timestamp AT TIME ZONE 'UTC'
 	  AND ($4 = '' OR lower(org_name) = lower($4))
 	  AND ($5 = '' OR lower(username) = lower($5))
-	  AND ($6 = '' OR lower(model) = lower($6))`
+	  AND ($6 = '' OR lower(model) = lower($6))
+	  AND ($7::timestamptz IS NULL OR captured_at >= $7::timestamptz)`
 
 	out := &CreditUsage{Groups: []json.RawMessage{}}
 	var totals []byte

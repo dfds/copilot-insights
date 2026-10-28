@@ -237,10 +237,28 @@ func creditInclude(c *gin.Context, top int) ([]string, error) {
 	return out, nil
 }
 
+// creditSince parses ?since=, an RFC 3339 timestamp. Only the hourly route
+// takes it: the daily report cannot be narrowed below a day.
+func creditSince(c *gin.Context, hourly bool) (time.Time, error) {
+	raw := c.Query("since")
+	if raw == "" {
+		return time.Time{}, nil
+	}
+	if !hourly {
+		return time.Time{}, badRequest("invalid_since", "since is only accepted by /credits/hourly")
+	}
+	t, err := time.Parse(time.RFC3339, raw)
+	if err != nil {
+		return time.Time{}, badRequest("invalid_since", "since must be an RFC 3339 timestamp")
+	}
+	return t, nil
+}
+
 // credits serves the /credits routes: ?scope=&from=&to=|year=&month=
-// &login=&model=&groupBy=&top=&rankBy=&include= with paging over the groups. An org
-// scope narrows the rows to that org.
-func (a *API) credits(c *gin.Context, groupBy func(*gin.Context) ([]string, error), alwaysGrouped bool,
+// &login=&model=&groupBy=&top=&rankBy=&include= with paging over the groups,
+// and &since= on the hourly route. An org scope narrows the rows to that org.
+// hourly groups by hour, so meta.page is always set.
+func (a *API) credits(c *gin.Context, groupBy func(*gin.Context) ([]string, error), hourly bool,
 	read func(context.Context, store.CreditFilter) (*store.CreditUsage, int, error)) {
 	ctx := c.Request.Context()
 	sc, err := a.scope(c)
@@ -254,6 +272,11 @@ func (a *API) credits(c *gin.Context, groupBy func(*gin.Context) ([]string, erro
 		return
 	}
 	groups, err := groupBy(c)
+	if err != nil {
+		fail(c, err)
+		return
+	}
+	since, err := creditSince(c, hourly)
 	if err != nil {
 		fail(c, err)
 		return
@@ -284,6 +307,7 @@ func (a *API) credits(c *gin.Context, groupBy func(*gin.Context) ([]string, erro
 		Top:        top,
 		RankBy:     rank,
 		Include:    include,
+		Since:      since,
 		Page:       p,
 	})
 	if err != nil {
@@ -297,7 +321,7 @@ func (a *API) credits(c *gin.Context, groupBy func(*gin.Context) ([]string, erro
 	}
 	meta.Scope = sc.String()
 	setRange(meta, from, to)
-	if alwaysGrouped || len(groups) > 0 {
+	if hourly || len(groups) > 0 {
 		meta.Page = pageMeta(p, total)
 	}
 	respond(c, usage, meta)
